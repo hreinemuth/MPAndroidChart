@@ -21,6 +21,7 @@ import com.github.mikephil.charting.data.BarLineScatterCandleBubbleData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.ChartHighlighter;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.background.BackgroundRange;
 import com.github.mikephil.charting.interfaces.dataprovider.BarLineScatterCandleBubbleDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.IBarLineScatterCandleBubbleDataSet;
 import com.github.mikephil.charting.jobs.AnimatedMoveViewJob;
@@ -552,7 +553,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
         if (mDrawBackgroundRanges) {
 
-            BackgroundRange[] ranges = getBacgetBackgroundRanges();
+            BackgroundRange[] ranges = getBackgroundRanges();
 
             for (int i = 0; i < ranges.length; i++) {
 
@@ -568,10 +569,10 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
                 float lowerY = contentRectHeight * range.getLowerThreshold();
                 float higherY = contentRectHeight * range.getHigherThreshold();
                 float rangeHeight = higherY - lowerY;
-                float yTop = 0.0 + contentRectHeight - higherY;
+                float yTop = 0.0f + contentRectHeight - higherY;
                 float yBottom = yTop + rangeHeight;
 
-                RectF rect = new RectF(0.0, yTop, contentRectWidth, yBottom);
+                RectF rect = new RectF(0.0f, yTop, contentRectWidth, yBottom);
     
                 c.drawRect(rect, rangePaint);
             }
