@@ -563,16 +563,15 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
                 rangePaint.setStyle(Style.FILL);
                 rangePaint.setColor(range.getColor());
 
-                float contentRectWidth = mViewPortHandler.getContentRect().width();
                 float contentRectHeight= mViewPortHandler.getContentRect().height();
 
                 float lowerY = contentRectHeight * range.getLowerThreshold();
                 float higherY = contentRectHeight * range.getHigherThreshold();
                 float rangeHeight = higherY - lowerY;
-                float yTop = 0.0f + contentRectHeight - higherY;
+                float yTop = mViewPortHandler.getContentTop() + contentRectHeight - higherY;
                 float yBottom = yTop + rangeHeight;
 
-                RectF rect = new RectF(0.0f, yTop, contentRectWidth, yBottom);
+                RectF rect = new RectF(mViewPortHandler.getContentLeft(), yTop, mViewPortHandler.getContentRight(), yBottom);
     
                 c.drawRect(rect, rangePaint);
             }
