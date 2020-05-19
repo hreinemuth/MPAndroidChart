@@ -568,10 +568,10 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
                 float lowerY = contentRectHeight * range.getLowerThreshold();
                 float higherY = contentRectHeight * range.getHigherThreshold();
                 float rangeHeight = higherY - lowerY;
-                float yTop = mViewPortHandler.getContentTop() + contentRectHeight - higherY;
+                float yTop = mViewPortHandler.contentTop() + contentRectHeight - higherY;
                 float yBottom = yTop + rangeHeight;
 
-                RectF rect = new RectF(mViewPortHandler.getContentLeft(), yTop, mViewPortHandler.getContentRight(), yBottom);
+                RectF rect = new RectF(mViewPortHandler.contentLeft(), yTop, mViewPortHandler.contentRight(), yBottom);
     
                 c.drawRect(rect, rangePaint);
             }
