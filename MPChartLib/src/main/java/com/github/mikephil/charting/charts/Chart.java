@@ -453,6 +453,8 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
      */
     protected Highlight[] mIndicesToHighlight;
 
+    protected BackgroundRange[] mBackgroundRanges;
+
     /**
      * The maximum distance in dp away from an entry causing it to highlight.
      */
@@ -481,6 +483,10 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
      */
     public Highlight[] getHighlighted() {
         return mIndicesToHighlight;
+    }
+
+    public BackgroundRange[] getBackgroundRanges() {
+        return mBackgroundRanges;
     }
 
     /**
@@ -543,6 +549,18 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
         mIndicesToHighlight = highs;
 
         setLastHighlighted(highs);
+
+        // redraw the chart
+        invalidate();
+    }
+
+    /**
+     *
+     * @param ranges
+     */
+    public void backgroundRanges(BackgroundRange[] ranges) {
+
+        mBackgroundRanges = ranges;
 
         // redraw the chart
         invalidate();

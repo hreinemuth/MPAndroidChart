@@ -96,6 +96,8 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
      */
     protected boolean mDrawGridBackground = false;
 
+    protected boolean mDrawBackgroundRanges = false;
+
     protected boolean mDrawBorders = false;
 
     protected boolean mClipValuesToContent = false;
@@ -170,7 +172,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
         mGridBackgroundPaint = new Paint();
         mGridBackgroundPaint.setStyle(Style.FILL);
         // mGridBackgroundPaint.setColor(Color.WHITE);
-        mGridBackgroundPaint.setColor(Color.rgb(240, 10, 10)); // light
+        mGridBackgroundPaint.setColor(Color.rgb(240, 240, 240)); // light
         // grey
 
         mBorderPaint = new Paint();
@@ -194,6 +196,8 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
         // execute all drawing commands
         drawGridBackground(canvas);
+
+        drawBackgroundRanges(canvas);
 
         if (mAutoScaleMinMaxEnabled) {
             autoScale();
@@ -541,6 +545,36 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
         if (mDrawBorders) {
             c.drawRect(mViewPortHandler.getContentRect(), mBorderPaint);
+        }
+    }
+
+    protected void drawBackgroundRanges(Canvas c) {
+
+        if (mDrawBackgroundRanges) {
+
+            BackgroundRange[] ranges = getBacgetBackgroundRanges();
+
+            for (int i = 0; i < ranges.length; i++) {
+
+                BackgroundRange range = ranges[i];
+
+                Paint rangePaint = new Paint();
+                rangePaint.setStyle(Style.FILL);
+                rangePaint.setColor(range.getColor());
+
+                float contentRectWidth = mViewPortHandler.getContentRect().width();
+                float contentRectHeight= mViewPortHandler.getContentRect().height();
+
+                float lowerY = contentRectHeight * range.getLowerThreshold();
+                float higherY = contentRectHeight * range.getHigherThreshold();
+                float rangeHeight = higherY - lowerY;
+                float yTop = 0.0 + contentRectHeight - higherY;
+                float yBottom = yTop + rangeHeight;
+
+                RectF rect = new RectF(0.0, yTop, contentRectWidth, yBottom);
+    
+                c.drawRect(rect, rangePaint);
+            }
         }
     }
 
@@ -1192,6 +1226,15 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
      */
     public void setDrawGridBackground(boolean enabled) {
         mDrawGridBackground = enabled;
+    }
+
+     /**
+     * set this to true to draw the background ranges, false if not
+     *
+     * @param enabled
+     */
+    public void setDrawBackgroundRanges(boolean enabled) {
+        mDrawBackgroundRanges = enabled;
     }
 
     /**
